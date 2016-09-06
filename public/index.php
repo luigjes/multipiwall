@@ -9,6 +9,8 @@ spl_autoload_register(function ($classname) {
 
 $config['displayErrorDetails'] = true;
 $config['addContentLengthHeader'] = false;
+$config['baseUrl'] = "/sites/multipiwall/";
+$config['baseUrlAssets'] = $config['baseUrl']."assets/";
 
 $app = new \Slim\App(["settings" => $config]);
 $container = $app->getContainer();
@@ -26,7 +28,7 @@ $app->get('/', function (Request $request, Response $response) {
     $tester = new Test();
     $asdf = $tester->displayVar();
     //$response->getBody()->write("Hello" . $asdf);
-    $response = $this->view->render($response, "default.php", ["test" => $asdf]);
+    $response = $this->view->render($response, "default.php", ["baseUrlAssets" => $this->get('settings')['baseUrlAssets'],"test" => $asdf]);
     //$this->logger->addInfo("Something interesting happened");
     return $response;
 });
